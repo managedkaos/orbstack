@@ -7,13 +7,15 @@ Notes and scripts for working with OrbStack servers
 Create:
 
 ```
+orb create ubuntu node18
 orb create ubuntu node20
 ```
 
 Configure:
 
 ```
-orb -m node20 ./ubuntu-install-node20.sh
+orb -m node18 sudo NODE_MAJOR=18 ./ubuntu-install-node.sh
+orb -m node20 sudo ./ubuntu-install-node.sh
 ```
 
 ## Connect to a Server Via SSH
