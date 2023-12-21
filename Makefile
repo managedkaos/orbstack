@@ -11,6 +11,9 @@ server:
 	-orb create --arch $(ARCH) $(OS):$(VERSION) $(NAME) && \
 	orb -m $(NAME) sudo ./$(OS)/init.sh
 
+init:
+	orb -m $(NAME) sudo ./$(OS)/init.sh
+
 $(TARGETS): server
 	@echo "### Installing $(@)"
 	orb -m $(NAME) sudo ./$(OS)/$(@).sh
