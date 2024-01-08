@@ -2,17 +2,13 @@ NAME    := $(shell date +%A-%F.%s | tr '[:upper:]' '[:lower:]')
 ARCH    := amd64
 OS      := ubuntu
 VERSION := jammy
-TARGETS := docker node postgresql
+TARGETS := docker node postgresql zabbix init
 
 help:
 	@grep -E "^orb" README.md
 
 server:
-	-orb create --arch $(ARCH) $(OS):$(VERSION) $(NAME) && \
-	orb -m $(NAME) sudo ./$(OS)/init.sh
-
-init:
-	orb -m $(NAME) sudo ./$(OS)/init.sh
+	-orb create --user-data ubuntu/init.yml --arch $(ARCH) $(OS):$(VERSION) $(NAME)
 
 $(TARGETS): server
 	@echo "### Installing $(@)"

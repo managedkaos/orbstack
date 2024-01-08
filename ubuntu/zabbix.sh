@@ -5,7 +5,7 @@ dpkg -i zabbix-release_6.4-1+ubuntu22.04_all.deb
 apt update
 
 # b. Install Zabbix server, frontend, agent
-apt install zabbix-server-pgsql zabbix-frontend-php php8.1-pgsql zabbix-nginx-conf zabbix-sql-scripts zabbix-agent
+apt install -y zabbix-server-pgsql zabbix-frontend-php php8.1-pgsql zabbix-nginx-conf zabbix-sql-scripts zabbix-agent zcat
 # c. Create initial database
 # Run the following on your database host.
 
@@ -14,7 +14,7 @@ sudo -u postgres createdb -O zabbix zabbix
 
 #On Zabbix server host import initial schema and data. You will be prompted to enter your newly created password.
 
-# zcat /usr/share/zabbix-sql-scripts/postgresql/server.sql.gz | sudo -u zabbix psql zabbix
+zcat /usr/share/zabbix-sql-scripts/postgresql/server.sql.gz | sudo -u zabbix psql zabbix
 #d. Configure the database for Zabbix server
 #Edit file /etc/zabbix/zabbix_server.conf
 
