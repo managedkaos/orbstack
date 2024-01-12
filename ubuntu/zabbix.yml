@@ -1,0 +1,40 @@
+#cloud-config
+
+package_upgrade: true
+
+packages:
+  - apache2
+  - postgresql
+  - zabbix-server-pgsql
+  - zabbix-frontend-php
+  - zabbix-agent
+
+write_files:
+  - path: /etc/zabbix/zabbix_server.conf
+    content: |
+      # Zabbix Server Configuration
+      ListenPort=10051
+      DBHost=localhost
+      DBName=zabbix
+      DBUser=zabbix
+      DBPassword=mysecretpassword
+
+  - path: /etc/zabbix/zabbix_agentd.conf
+    content: |
+      # Zabbix Agent Configuration
+      Server=localhost
+
+runcmd:
+  - systemctl enable postgresql
+  - systemctl start postgresql
+  - sudo -u postgres psql -c "CREATE DATABASE zabbix;"
+  - sudo -u postgres psql -c "CREATE USER zabbix WITH PASSWORD 'mysecretpassword';"
+  - sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE zabbix TO zabbix;"
+  - zcat /usr/share/doc/zabbix-server-pgsql*/create.sql.gz | sudo -u zabbix psql zabbix
+  - systemctl enable zabbix-server
+  - systemctl start zabbix-server
+  - systemctl enable zabbix-agent
+  - systemctl start zabbix-agent
+  - systemctl enable apache2  # Enable Apache for Zabbix frontend (if not already enabled)
+  - systemctl start apache2   # Start Apache for Zabbix frontend (if not already started)
+

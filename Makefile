@@ -10,6 +10,9 @@ help:
 server:
 	-orb create --user-data ubuntu/init.yml --arch $(ARCH) $(OS):$(VERSION) $(NAME)
 
+lab:
+	-orb create --user-data ubuntu/apache-https-lab.yml --arch $(ARCH) $(OS):$(VERSION) $(NAME)
+
 $(TARGETS): server
 	@echo "### Installing $(@)"
 	orb -m $(NAME) sudo ./$(OS)/$(@).sh
