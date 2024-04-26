@@ -1,0 +1,6 @@
+#cloud-config
+runcmd:
+  - curl -L https://tljh.jupyter.org/bootstrap.py sudo python3 - --admin orbstack
+
+final_message: "$UPTIME: Init complete"
+
