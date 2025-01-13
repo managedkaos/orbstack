@@ -19,8 +19,8 @@ ubuntu:
 jupyter-hub:
 	orb create --user-data ubuntu/jupyter-hub.yml --arch $(ARCH) $(OS):$(VERSION) $(NAME)
 
-lab:
-	orb create --user-data ubuntu/apache-https-lab.yml --arch $(ARCH) $(OS):$(VERSION) $(NAME)
+apache:
+	orb create --user-data ubuntu/apache.yml --arch $(ARCH) $(OS):$(VERSION) $(NAME)
 
 $(TARGETS): server
 	@echo "### Installing $(@)"
