@@ -11,10 +11,10 @@ list:
 	orb list
 
 server:
-	orb create --user-data ubuntu/init.yml --arch $(ARCH) $(OS):$(VERSION) $(NAME)
-
-server-no-init:
 	orb create --arch $(ARCH) $(OS):$(VERSION) $(NAME)
+
+ubuntu:
+	orb create --user-data ubuntu/init.yml --arch $(ARCH) $(OS):$(VERSION) $(NAME)
 
 jupyter-hub:
 	orb create --user-data ubuntu/jupyter-hub.yml --arch $(ARCH) $(OS):$(VERSION) $(NAME)
