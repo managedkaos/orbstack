@@ -16,6 +16,10 @@ server:
 ubuntu:
 	orb create --user-data ubuntu/init.yml --arch $(ARCH) $(OS):$(VERSION) $(NAME)
 
+rocky:
+	orb create --arch $(ARCH) rocky:9 $(NAME)
+	orb -m $(NAME) sudo ./rocky/init.sh
+
 jupyter-hub:
 	orb create --user-data ubuntu/jupyter-hub.yml --arch $(ARCH) $(OS):$(VERSION) $(NAME)
 
@@ -25,3 +29,5 @@ apache:
 $(TARGETS): server
 	@echo "### Installing $(@)"
 	orb -m $(NAME) sudo ./$(OS)/$(@).sh
+
+.PHONY: help list server ubuntu rocky jupyter-hub apache $(TARGETS)
