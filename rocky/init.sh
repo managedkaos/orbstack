@@ -1,6 +1,6 @@
 #!/bin/bash
 ulimit -c unlimited
-yum install -y varnish nginx git wget zip unzip
+yum install -y varnish nginx git wget zip unzip vim
 sed -i 's/80/8080/' /etc/nginx/nginx.conf
 systemctl enable --now varnish nginx
 sleep 1
