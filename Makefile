@@ -17,6 +17,7 @@ list:
 server:
 	$(eval $(call set_name,$(@)))
 	orb create --arch $(ARCH) $(OS):$(VERSION) $(NAME)
+	orb -m $(NAME) sudo ./ubuntu/init.sh
 	@echo "ssh $(NAME)@orb"
 
 ubuntu:
