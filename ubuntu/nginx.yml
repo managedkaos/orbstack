@@ -1,0 +1,17 @@
+#cloud-config
+
+package_update: true
+
+package_upgrade: true
+
+packages:
+  - build-essential
+  - ca-certificates
+  - curl
+  - git
+  - gnupg
+  - python3-dev
+  - python3-pip
+  - python3-venv
+  - wget
+  - nginx
