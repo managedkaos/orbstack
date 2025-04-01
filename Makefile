@@ -14,17 +14,15 @@ help:
 list:
 	orb list
 
-server:
+default:
 	$(eval $(call set_name,$(@)))
 	orb create --arch $(ARCH) $(OS):$(VERSION) $(NAME)
 	orb -m $(NAME) sudo ./ubuntu/init.sh
 	@echo "ssh $(NAME)@orb"
 
-ubuntu:
-	$(eval $(call set_name,ubuntu))
-	orb create --arch $(ARCH) ubuntu:$(VERSION) $(NAME)
-	orb -m $(NAME) sudo ./ubuntu/init.sh
-	@echo "ssh $(NAME)@orb"
+server: default
+
+ubuntu: default
 
 rocky:
 	$(eval $(call set_name,rocky))
