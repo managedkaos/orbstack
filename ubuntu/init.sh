@@ -11,5 +11,7 @@ apt-get install -y \
   python3-pip \
   python3-venv \
   openjdk-21-jdk \
-  wget
+  unzip \
+  wget \
+  zip
 sudo install -m 0755 -d /etc/apt/keyrings
