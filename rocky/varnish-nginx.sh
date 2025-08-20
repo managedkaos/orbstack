@@ -28,4 +28,4 @@ sleep 1
 # Check if Varnish is working
 curl -s http://localhost:6081 | \
     grep Nginx && \
-    echo "Varnish is working" || echo "Varnish is not working"
+    echo "# Varnish is working" || echo "# Varnish is not working"

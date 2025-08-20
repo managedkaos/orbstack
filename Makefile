@@ -9,9 +9,11 @@ define set_name
 endef
 
 help:
-	@grep -E "^orb" README.md
+	@echo "Usage: make server NAME=<name> [ARCH=<arch>] [OS=<os>] [VERSION=<version>]"
+	@echo "Available architectures: amd64, arm64"
+	@echo "Available operating systems: https://docs.orbstack.dev/machines/distros"
 
-list:
+list-machines:
 	orb list
 
 default:
@@ -24,10 +26,21 @@ server: default
 
 ubuntu: default
 
+demo:
+	$(eval $(call set_name,$(@)))
+	orb create --arch $(ARCH) $(OS):$(VERSION) $(NAME)
+	orb -m $(NAME) sudo useradd -m -s /bin/bash demo
+	@echo "ssh $(NAME)@orb"
+	@echo "sudo visudo"
+	@echo "demo ALL=(ALL) NOPASSWD: ALL"
+	@echo "exit"
+	@echo "ssh demo@$(NAME)@orb"
+
 rocky:
 	$(eval $(call set_name,rocky))
 	orb create --arch $(ARCH) rocky:9 $(NAME)
 	orb -m $(NAME) sudo ./rocky/init.sh
+	orb -m $(NAME) sudo ./rocky/varnish-nginx.sh
 	@echo "ssh $(NAME)@orb"
 
 ubuntu-user-data:
@@ -42,6 +55,9 @@ jupyter-hub:
 apache:
 	orb create --user-data ubuntu/apache.yml --arch $(ARCH) $(OS):$(VERSION) $(NAME)
 	@echo "ssh $(NAME)@orb"
+
+list-distros:
+	@./scripts/scrape-distros.py
 
 $(TARGETS): server
 	@echo "### Installing $(@)"

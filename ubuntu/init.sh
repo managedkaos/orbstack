@@ -15,3 +15,5 @@ apt-get install -y \
   wget \
   zip
 sudo install -m 0755 -d /etc/apt/keyrings
+sudo useradd -m -s /bin/bash demo
+sudo echo "demo ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/demo

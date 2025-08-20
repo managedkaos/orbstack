@@ -8,3 +8,4 @@ unzip aws-sam-cli-linux-x86_64.zip -d sam
 ./sam/install
 /usr/local/bin/sam --version
 /usr/local/bin/aws --version
+curl -sS https://starship.rs/install.sh | sh

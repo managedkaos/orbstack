@@ -1,0 +1,6 @@
+requests
+beautifulsoup4
+black
+isort
+flake8
+pylint

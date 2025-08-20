@@ -12,3 +12,7 @@ yum install -y \
     unzip \
     vim \
     python3-pip
+
+sudo useradd -m -s /bin/bash demo
+sudo echo "demo ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/demo
+
