@@ -1,6 +1,6 @@
 ARCH    := amd64
 OS      := ubuntu
-VERSION := oracular
+VERSION := noble
 TARGETS := docker node postgresql zabbix init
 
 # Dynamically calculate NAME based on the target
