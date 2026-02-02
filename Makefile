@@ -1,7 +1,8 @@
-ARCH    := amd64
-OS      := ubuntu
-VERSION := noble
-TARGETS := docker node postgresql zabbix init
+ARCH     := amd64
+OS       := ubuntu
+VERSION  := noble
+PACKAGES := node postgresql default aws-sam-cli docker github-cli starship
+
 
 # Dynamically calculate NAME based on the target
 define set_name
@@ -9,22 +10,18 @@ define set_name
 endef
 
 help:
-	@echo "Usage: make server NAME=<name> [ARCH=<arch>] [OS=<os>] [VERSION=<version>]"
-	@echo "Available architectures: amd64, arm64"
-	@echo "Available operating systems: https://docs.orbstack.dev/machines/distros"
+	@cat .help
+	@echo "\t$(PACKAGES)"
+	@echo "\trun make NAME=SERVER_NAME PACKAGE_NAME"
 
 list-machines:
 	orb list
 
-default:
+server:
 	$(eval $(call set_name,$(@)))
 	orb create --arch $(ARCH) $(OS):$(VERSION) $(NAME)
-	orb -m $(NAME) sudo ./ubuntu/init.sh
+	orb -m $(NAME) sudo ./ubuntu/install-default.sh
 	@echo "ssh $(NAME)@orb"
-
-server: default
-
-ubuntu: default
 
 demo:
 	$(eval $(call set_name,$(@)))
@@ -45,22 +42,25 @@ rocky:
 
 ubuntu-user-data:
 	$(eval $(call set_name,ubuntu))
-	orb create --user-data ubuntu/init.yml --arch $(ARCH) $(OS):$(VERSION) $(NAME)
+	orb create --user-data ubuntu/_Archive/init.yml --arch $(ARCH) $(OS):$(VERSION) $(NAME)
 	@echo "ssh $(NAME)@orb"
 
 jupyter-hub:
-	orb create --user-data ubuntu/jupyter-hub.yml --arch $(ARCH) $(OS):$(VERSION) $(NAME)
+	orb create --user-data ubuntu/_Archive/jupyter-hub.yml --arch $(ARCH) $(OS):$(VERSION) $(NAME)
 	@echo "ssh $(NAME)@orb"
 
 apache:
-	orb create --user-data ubuntu/apache.yml --arch $(ARCH) $(OS):$(VERSION) $(NAME)
+	orb create --user-data ubuntu/_Archive/apache.yml --arch $(ARCH) $(OS):$(VERSION) $(NAME)
 	@echo "ssh $(NAME)@orb"
 
 list-distros:
 	@./scripts/scrape-distros.py
 
-$(TARGETS): server
-	@echo "### Installing $(@)"
-	orb -m $(NAME) sudo ./$(OS)/$(@).sh
+list-packages:
+	@echo "$(PACKAGES)"
 
-.PHONY: help list server ubuntu rocky jupyter-hub apache $(TARGETS)
+$(PACKAGES):
+	@echo "### Installing $(@)"
+	orb -m $(NAME) sudo ./$(OS)/install-$(@).sh
+
+.PHONY: help list server ubuntu rocky jupyter-hub apache $(PACKAGES)

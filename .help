@@ -1,0 +1,10 @@
+Usage: make server NAME=<name> [ARCH=<arch>] [OS=<os>] [VERSION=<version>]
+
+## Available architectures:
+	amd64, arm64
+
+## Available operating systems:
+	open https://docs.orbstack.dev/machines/distros
+	or run make list-distros
+
+## Available packages for install on Ubuntu:
