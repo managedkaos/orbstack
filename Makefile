@@ -1,7 +1,7 @@
 ARCH     := amd64
 OS       := ubuntu
 VERSION  := noble
-PACKAGES := node postgresql default aws-sam-cli docker github-cli starship
+PACKAGES := node postgresql default aws-sam-cli docker github-cli starship gcloud
 
 
 # Dynamically calculate NAME based on the target
