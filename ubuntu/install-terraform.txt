@@ -1,0 +1,5 @@
+#!/bin/bash
+
+curl -sL https://raw.githubusercontent.com/warrensbox/terraform-switcher/master/install.sh | bash
+
+/usr/local/bin/tfswitch --latest --bin=/usr/local/bin/terraform

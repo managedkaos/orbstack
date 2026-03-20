@@ -1,0 +1,13 @@
+sudo /bin/bash -c "$(curl -sL https://raw.githubusercontent.com/warrensbox/terraform-switcher/master/install.sh)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
+test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> ~/.bashrc
+
+echo 'eval "$(starship init bash)"' >> ~/.bashrc
+mkdir -p ~/.config && touch ~/.config/starship.toml
+echo '[container]' >> ~/.config/starship.toml
+echo 'disabled = true' >> ~/.config/starship.toml
+
+echo 'export PATH="$PATH:/home/Michael.Jenkins/bin' >> ~/.bashrc
+source ~/.bashrc
