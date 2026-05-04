@@ -12,6 +12,7 @@ apt-get install -y \
   python3-pip \
   python3-venv \
   openjdk-21-jdk \
+  software-properties-common \
   unzip \
   wget \
   zip
